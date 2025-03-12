@@ -61,12 +61,9 @@ def main():
             user_data['Extracurricular Activities']=int(user_data['Extracurricular Activities'])
             user_data['user_name']=user_name
             collection.insert_one(user_data)
-
-            records=collection.find({},{'_id':0})
-            file_data=pd.DataFrame(records)
-            file_data.to_csv('C:/E_FSDS/student_performance.csv',index=False)
-        
             st.success(f'Thank You !!')
+
+        
 
 if __name__=='__main__':
     main()
