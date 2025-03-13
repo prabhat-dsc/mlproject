@@ -5,10 +5,14 @@ import streamlit as st
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
-
+models={
+    'Decision Tree':joblib.load('dt_model.pkl'),
+    'SVC':joblib.load('svc_model.pkl'),
+    'Logistic Regression':joblib.load('log_reg_model.pkl')
+}
 
 def load_model():
-    model,scaler=joblib.load('C:\E_FSDS\projects\LinearReg\my_models\log_reg_model.pkl')
+    model,scaler=joblib.load('log_reg_model.pkl')
     return model,scaler
 
 def data_preprocess(data,scaler):
@@ -16,15 +20,19 @@ def data_preprocess(data,scaler):
     df_scaled=scaler.transform(df)
     return df_scaled
 
-def model_prediction(data):
-    model,scaler=load_model()
+def model_prediction(data,model_choice):
+    _,scaler=load_model()
     processed_data=data_preprocess(data,scaler)
+    model=models[model_choice][0]
     prediction=model.predict(processed_data)
     return prediction
 
 def main():
     st.title("🌸 Iris Flower Species Prediction")
-    st.header("Enter the input !!")
+    st.sidebar.header("🔍 Model Selection")
+
+    model_choice = st.sidebar.selectbox("Select a Model for Prediction",list(models.keys()))
+
     user_name=st.text_input("Enter Your Name")
     sepal_length=st.slider('sepal length (cm)',min_value=4.0,max_value=8.0 ,value=4.0)
     sepal_width= st.slider('sepal width (cm)',min_value=2.0 ,max_value=5.0 ,value=2.0)
@@ -41,7 +49,7 @@ def main():
                     'petal length (cm)':petal_length,
                     'petal width (cm)':petal_width
                 }
-            prediction=model_prediction(user_data)
+            prediction=model_prediction(user_data,model_choice)
             label={0:'sesota',1:'versicolor',2:'virginica'}
             st.subheader("🔹 Prediction Result")
             st.success(f"Prdicted Flower Spices 🌸:: {label[prediction[0]]}")
