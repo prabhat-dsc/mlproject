@@ -17,7 +17,7 @@ db=client['Aimind']
 collection=db['student_score']
 
 def load_data():
-    with open('student/student_final_model_1.pkl','rb') as file:
+    with open('student_final_model_1.pkl','rb') as file:
         model,scaler,le=pickle.load(file)
     return model,scaler,le
 
