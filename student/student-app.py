@@ -36,7 +36,7 @@ def model_prediction(data):
 
 def main():
     st.title('Machine Learning Prediction App')
-    st.header('Enter the input Value: ')
+    st.header('Enter Data: ')
     user_name = st.text_input("Enter Your Name")
     Hours_Studied=st.number_input('Hours Studied',min_value=1 ,max_value=9,value=1)
     Previous_Scores=st.number_input('Previous Scores',min_value=40 ,max_value=99,value=45)
